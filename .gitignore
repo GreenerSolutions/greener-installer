@@ -1,0 +1,24 @@
+# Release binaries belong in GitHub Releases, never Git history.
+*.deb
+*.tar
+*.tar.gz
+*.tgz
+*.zip
+*.sha256
+SHA256SUMS
+
+# Never commit secrets or local configuration.
+.env
+.env.*
+*.key
+*.pem
+*.p12
+*.pfx
+*credentials*
+*secret*
+*token*
+
+# Local editor and operating-system files.
+.DS_Store
+*.swp
+*~
