@@ -11,7 +11,7 @@ customer data.
 
 ## Current release
 
-Install `v0.1.0` only on a fresh Ubuntu 26.04 amd64 host. Docker Engine with the
+Install `v0.2.4` on a fresh Ubuntu 26.04 amd64 host. Docker Engine with the
 Docker Compose plugin must already be installed and available as
 `/usr/bin/docker` with the local socket at `/var/run/docker.sock`.
 
@@ -21,12 +21,12 @@ Download and verify every asset in the immutable release bundle:
 sudo apt update
 sudo apt install -y ca-certificates curl
 
-install -d -m 0700 "$HOME/greener-installer-v0.1.0"
-cd "$HOME/greener-installer-v0.1.0"
+install -d -m 0700 greener-installer-v0.2.4
+cd greener-installer-v0.2.4
 
-base_url="https://github.com/GreenerSolutions/greener-installer/releases/download/v0.1.0"
+base_url="https://github.com/GreenerSolutions/greener-installer/releases/download/v0.2.4"
 assets="
-greener-building-server_0.1.0-64_amd64.deb
+greener-building-server_0.2.4-1_amd64.deb
 tailscale_1.104.2_amd64.deb
 tailscale-package.json
 install-release-bundle.sh
@@ -40,9 +40,21 @@ for asset in $assets; do
 done
 
 sha256sum -c SHA256SUMS
+chmod 0755 ./install-release-bundle.sh
 sudo ./install-release-bundle.sh "$PWD"
 sudo greener status
 ```
+
+New guided setups use the AWS production control plane:
+
+- Nexus: `https://nexus.smarterbuildings.ca`
+- VPN: `https://connect.smarterbuildings.ca`
+- Images: `registry.smarterbuildings.ca`
+
+Create a package-managed enrollment in Nexus, then run `sudo greener setup`
+and follow its prompts. Explicit operator settings and existing local
+installations retain their configured endpoints. Installing the package alone
+does not activate the application containers.
 
 The installer validates Ubuntu 26.04, configuration, ownership, listeners,
 immutable image digests, and enrollment state before activation. Building VPN
@@ -58,8 +70,8 @@ BACnet/IP uses UDP `47808` when those modules are selected.
 The release bundle is secret-free and contains only the seven audited installer
 assets listed above. Site configuration, the Nexus URL, a one-time enrollment
 key, the registry host, and approved immutable image digests must be supplied
-through the controlled installation process. Never post those values in this
-repository or in a GitHub issue.
+through the controlled installation process. Never post credentials, private
+site configuration, or customer data in this repository or in a GitHub issue.
 
 Published assets are versioned and must not be replaced in place. A corrected
 build receives a new release tag.
