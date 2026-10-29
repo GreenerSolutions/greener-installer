@@ -11,7 +11,7 @@ customer data.
 
 ## Current release
 
-Install `v0.2.4` on a fresh Ubuntu 26.04 amd64 host. Docker Engine with the
+Install `v0.2.5` on a fresh Ubuntu 26.04 amd64 host. Docker Engine with the
 Docker Compose plugin must already be installed and available as
 `/usr/bin/docker` with the local socket at `/var/run/docker.sock`.
 
@@ -21,12 +21,12 @@ Download and verify every asset in the immutable release bundle:
 sudo apt update
 sudo apt install -y ca-certificates curl
 
-install -d -m 0700 greener-installer-v0.2.4
-cd greener-installer-v0.2.4
+install -d -m 0700 greener-installer-v0.2.5
+cd greener-installer-v0.2.5
 
-base_url="https://github.com/GreenerSolutions/greener-installer/releases/download/v0.2.4"
+base_url="https://github.com/GreenerSolutions/greener-installer/releases/download/v0.2.5"
 assets="
-greener-building-server_0.2.4-1_amd64.deb
+greener-building-server_0.2.5-1_amd64.deb
 tailscale_1.104.2_amd64.deb
 tailscale-package.json
 install-release-bundle.sh
@@ -66,6 +66,17 @@ Follow the password-change checkpoint when prompted. Explicit operator settings
 and existing local installations retain their configured endpoints. Installing
 the package alone does not activate the application containers.
 
+After changing the temporary password in the building application's frontend,
+complete activation and verify the installed release:
+
+```bash
+sudo greener activate --verify-password-change-only
+sudo greener activate --resume
+sudo greener update --check-only
+```
+
+The final check reports the installed release to Nexus without applying updates.
+
 The installer validates Ubuntu 26.04, configuration, ownership, listeners,
 immutable image digests, and enrollment state before activation. Building VPN
 enrollment is package-managed through Greener Nexus and uses short-lived,
@@ -74,6 +85,11 @@ single-use credentials; no reusable VPN key is included in the release.
 After activation, the BACnet application is served over HTTPS on ports `443`
 and `5000`. ChirpStack uses TCP `8080`, Basic Station uses TCP `3001`, and
 BACnet/IP uses UDP `47808` when those modules are selected.
+
+New guided setups publish frontend HTTPS on all IPv4 host interfaces for LAN
+and VPN access. Keep these ports behind the building firewall; do not forward
+them from the public Internet. Existing configurations without the optional
+`network.frontend_bind` setting retain their prior frontend bind address.
 
 ## Trust boundary
 
