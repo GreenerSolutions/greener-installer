@@ -51,10 +51,20 @@ New guided setups use the AWS production control plane:
 - VPN: `https://connect.smarterbuildings.ca`
 - Images: `registry.smarterbuildings.ca`
 
-Create a package-managed enrollment in Nexus, then run `sudo greener setup`
-and follow its prompts. Explicit operator settings and existing local
-installations retain their configured endpoints. Installing the package alone
-does not activate the application containers.
+Create a package-managed enrollment in Nexus and obtain its approved immutable
+`deployment-manifest.json` from your administrator. Start guided preparation
+with the manifest's absolute path:
+
+```bash
+sudo greener setup --guided --manifest /absolute/path/deployment-manifest.json --prepare-only
+sudo greener activate --check-only
+sudo greener activate --pull-only
+sudo greener activate --resume
+```
+
+Follow the password-change checkpoint when prompted. Explicit operator settings
+and existing local installations retain their configured endpoints. Installing
+the package alone does not activate the application containers.
 
 The installer validates Ubuntu 26.04, configuration, ownership, listeners,
 immutable image digests, and enrollment state before activation. Building VPN
