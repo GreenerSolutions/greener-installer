@@ -1,5 +1,9 @@
 # Greener Installer v0.2.4
 
+Superseded by v0.2.5 for fresh installations. A subsequent empty-state live test
+exposed a ChirpStack Backend startup/token ordering failure in v0.2.4; use the
+corrected release. Existing immutable v0.2.4 assets have not been replaced.
+
 New installations default to the AWS control plane at
 `nexus.smarterbuildings.ca`, `connect.smarterbuildings.ca`, and
 `registry.smarterbuildings.ca`.
