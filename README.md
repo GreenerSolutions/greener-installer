@@ -11,7 +11,7 @@ customer data.
 
 ## Current release
 
-Install `v0.2.5` on a fresh Ubuntu 26.04 amd64 host. Docker Engine with the
+Install `v0.3.1` on a fresh Ubuntu 26.04 amd64 host. Docker Engine with the
 Docker Compose plugin must already be installed and available as
 `/usr/bin/docker` with the local socket at `/var/run/docker.sock`.
 
@@ -19,14 +19,15 @@ Download and verify every asset in the immutable release bundle:
 
 ```bash
 sudo apt update
-sudo apt install -y ca-certificates curl
+sudo apt install -y ca-certificates curl docker.io docker-compose-v2
+sudo systemctl enable --now docker
 
-install -d -m 0700 greener-installer-v0.2.5
-cd greener-installer-v0.2.5
+install -d -m 0700 greener-installer-v0.3.1
+cd greener-installer-v0.3.1
 
-base_url="https://github.com/GreenerSolutions/greener-installer/releases/download/v0.2.5"
+base_url="https://github.com/GreenerSolutions/greener-installer/releases/download/v0.3.1"
 assets="
-greener-building-server_0.2.5-1_amd64.deb
+greener-building-server_0.3.1-1_amd64.deb
 tailscale_1.104.2_amd64.deb
 tailscale-package.json
 install-release-bundle.sh
@@ -52,7 +53,9 @@ New guided setups use the AWS production control plane:
 - Images: `registry.smarterbuildings.ca`
 
 Create a package-managed enrollment in Nexus and obtain its approved immutable
-`deployment-manifest.json` from your administrator. Start guided preparation
+`deployment-manifest.json` from your administrator. Fresh installations require
+a nine-image manifest including `ocpp_proxy` and a compatible Nexus API. The
+installer package contains no application images or deployment manifest. Start guided preparation
 with the manifest's absolute path:
 
 ```bash
@@ -84,7 +87,8 @@ single-use credentials; no reusable VPN key is included in the release.
 
 After activation, the BACnet application is served over HTTPS on ports `443`
 and `5000`. ChirpStack uses TCP `8080`, Basic Station uses TCP `3001`, and
-BACnet/IP uses UDP `47808` when those modules are selected.
+BACnet/IP uses UDP `47808` when those modules are selected. OCPP chargers use
+the managed proxy on TCP `9000` by default.
 
 New guided setups publish frontend HTTPS on all IPv4 host interfaces for LAN
 and VPN access. Keep these ports behind the building firewall; do not forward
