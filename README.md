@@ -11,9 +11,14 @@ customer data.
 
 ## Current release
 
-Install `v0.3.1` on a fresh Ubuntu 26.04 amd64 host. Docker Engine with the
+Install `v0.3.1-2` on a fresh Ubuntu 26.04 amd64 host. Docker Engine with the
 Docker Compose plugin must already be installed and available as
 `/usr/bin/docker` with the local socket at `/var/run/docker.sock`.
+
+Package revision `0.3.1-2` fixes ChirpStack bootstrap validation with Docker 29's
+empty volume `DriverConfig` metadata. Installer/API version remains `0.3.1`;
+application release `0.2.11`, existing journals, keys and volumes are preserved.
+See [hotfix notes](RELEASE_NOTES_v0.3.1-2.md) for upgrading a paused installation.
 
 Download and verify every asset in the immutable release bundle:
 
@@ -22,12 +27,12 @@ sudo apt update
 sudo apt install -y ca-certificates curl docker.io docker-compose-v2
 sudo systemctl enable --now docker
 
-install -d -m 0700 greener-installer-v0.3.1
-cd greener-installer-v0.3.1
+install -d -m 0700 greener-installer-v0.3.1-2
+cd greener-installer-v0.3.1-2
 
-base_url="https://github.com/GreenerSolutions/greener-installer/releases/download/v0.3.1"
+base_url="https://github.com/GreenerSolutions/greener-installer/releases/download/v0.3.1-2"
 assets="
-greener-building-server_0.3.1-1_amd64.deb
+greener-building-server_0.3.1-2_amd64.deb
 tailscale_1.104.2_amd64.deb
 tailscale-package.json
 install-release-bundle.sh
