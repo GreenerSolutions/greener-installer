@@ -11,8 +11,12 @@ customer data.
 
 ## Current release
 
-Use `v0.3.2` on a fresh **Ubuntu 26.04 amd64** machine. Recommended resources:
+Use `v0.3.4` on a fresh **Ubuntu 26.04 amd64** machine. Recommended resources:
 4 CPUs, 8 GiB RAM, and 80 GiB free storage.
+
+This release is for **new installations**. Existing deployed servers can keep
+running their current installer; upgrades and migration of older unsigned
+update journals require a separate rollout.
 
 ### 1. Create the installation in Nexus
 
@@ -28,7 +32,7 @@ The temporary application password is a separate credential used later.
 
 ```bash
 curl --fail --location --proto '=https' --tlsv1.2 \
-  https://github.com/GreenerSolutions/greener-installer/releases/download/v0.3.2/install-release-bundle.sh \
+  https://github.com/GreenerSolutions/greener-installer/releases/download/v0.3.4/install-release-bundle.sh \
   -o install-release-bundle.sh &&
 sudo bash ./install-release-bundle.sh --setup
 ```
@@ -58,7 +62,12 @@ sudo greener setup --guided
 
 Explicit operator settings and existing local installations retain their configured
 endpoints. Installing the Debian package alone does not activate containers.
-See [release notes](RELEASE_NOTES_v0.3.2.md) for compatibility details.
+See [release notes](RELEASE_NOTES_v0.3.4.md) for compatibility details.
+
+New installs verify approved manifests with the production public key included
+in the package. Normal heartbeats report the installed application release;
+checking for updates is no longer needed just to populate that field in Nexus.
+
 
 ### Service addresses
 
@@ -79,7 +88,7 @@ The production services are:
 
 Each immutable release contains exactly these seven assets:
 
-- `greener-building-server_0.3.2-1_amd64.deb`
+- `greener-building-server_0.3.4-1_amd64.deb`
 - `tailscale_1.104.2_amd64.deb`
 - `tailscale-package.json`
 - `install-release-bundle.sh`
