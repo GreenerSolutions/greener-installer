@@ -11,7 +11,7 @@ customer data.
 
 ## Current release
 
-Use `v0.3.7` on a fresh **Ubuntu 26.04 amd64** machine. Recommended resources:
+Use `v0.3.8` on a fresh **Ubuntu 26.04 amd64** machine. Recommended resources:
 4 CPUs, 8 GiB RAM, and 80 GiB free storage.
 
 This release is for **new installations** and a centrally coordinated installer
@@ -34,7 +34,7 @@ The temporary application password is a separate credential used later.
 
 ```bash
 curl --fail --location --proto '=https' --tlsv1.2 \
-  https://github.com/GreenerSolutions/greener-installer/releases/download/v0.3.7/install-release-bundle.sh \
+  https://github.com/GreenerSolutions/greener-installer/releases/download/v0.3.8/install-release-bundle.sh \
   -o install-release-bundle.sh &&
 sudo bash ./install-release-bundle.sh --setup
 ```
@@ -70,7 +70,7 @@ sudo greener setup --guided
 
 Explicit operator settings and existing local installations retain their configured
 endpoints. Installing the Debian package alone does not activate containers.
-See [release notes](RELEASE_NOTES_v0.3.7.md) for compatibility details.
+See [release notes](RELEASE_NOTES_v0.3.8.md) for compatibility details.
 
 New installs verify approved SmarterBuildings Core manifests with the production
 public key included in the package. Normal heartbeats report the installed
@@ -96,7 +96,7 @@ The production services are:
 
 Each immutable release contains exactly these seven bootstrap assets:
 
-- `greener-building-server_0.3.7-1_amd64.deb`
+- `greener-building-server_0.3.8-1_amd64.deb`
 - `tailscale_1.104.2_amd64.deb`
 - `tailscale-package.json`
 - `install-release-bundle.sh`
