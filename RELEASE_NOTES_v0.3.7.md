@@ -1,5 +1,8 @@
 # Greener installer v0.3.7
 
+> The `0.3.7-1` worker cannot follow the GitHub package download redirect.
+> Use [v0.3.8](RELEASE_NOTES_v0.3.8.md) for the one-time upgrade on existing hosts.
+
 Package: `greener-building-server_0.3.7-1_amd64.deb` for fresh Ubuntu 26.04
 amd64 hosts.
 
