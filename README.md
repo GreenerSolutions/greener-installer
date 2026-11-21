@@ -11,7 +11,7 @@ customer data.
 
 ## Current release
 
-Use `v0.3.4` on a fresh **Ubuntu 26.04 amd64** machine. Recommended resources:
+Use `v0.3.6` on a fresh **Ubuntu 26.04 amd64** machine. Recommended resources:
 4 CPUs, 8 GiB RAM, and 80 GiB free storage.
 
 This release is for **new installations**. Existing deployed servers can keep
@@ -32,7 +32,7 @@ The temporary application password is a separate credential used later.
 
 ```bash
 curl --fail --location --proto '=https' --tlsv1.2 \
-  https://github.com/GreenerSolutions/greener-installer/releases/download/v0.3.4/install-release-bundle.sh \
+  https://github.com/GreenerSolutions/greener-installer/releases/download/v0.3.6/install-release-bundle.sh \
   -o install-release-bundle.sh &&
 sudo bash ./install-release-bundle.sh --setup
 ```
@@ -41,10 +41,16 @@ The command installs missing prerequisites and the verified installer bundle,
 then prompts for the enrollment key privately. Do not put the key in a command
 or send it to anyone.
 
-Choose the building Ethernet interface and either use Ubuntu's existing network
-configuration or configure a static building address. Review the local settings
-before confirming. A static-network change requires a second confirmation after
-Ubuntu applies it; keep your SSH management connection available.
+The installer detects each physical Ethernet port and asks whether to enable it.
+For each enabled port, choose Keep, DHCP, or Static; Static requires you to enter
+an address and prefix. Choose a purpose preset or type a custom label. Internet
+routing and the BACnet/building interface are selected separately.
+
+Review the summary before applying. Network changes use a 120-second trial.
+Confirm within that window, including after reconnecting if SSH disconnects;
+unconfirmed changes roll back automatically. Purpose labels do not change routing.
+Live multi-interface disconnect and reboot acceptance for this release is deferred;
+see the release notes before using the new network flow.
 
 The installer retrieves the approved deployment manifest from Nexus, prepares the
 runtime, downloads the application images, and starts the services. When prompted,
@@ -62,7 +68,7 @@ sudo greener setup --guided
 
 Explicit operator settings and existing local installations retain their configured
 endpoints. Installing the Debian package alone does not activate containers.
-See [release notes](RELEASE_NOTES_v0.3.4.md) for compatibility details.
+See [release notes](RELEASE_NOTES_v0.3.6.md) for compatibility details.
 
 New installs verify approved manifests with the production public key included
 in the package. Normal heartbeats report the installed application release;
@@ -88,7 +94,7 @@ The production services are:
 
 Each immutable release contains exactly these seven assets:
 
-- `greener-building-server_0.3.4-1_amd64.deb`
+- `greener-building-server_0.3.6-1_amd64.deb`
 - `tailscale_1.104.2_amd64.deb`
 - `tailscale-package.json`
 - `install-release-bundle.sh`
