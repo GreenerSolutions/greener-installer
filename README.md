@@ -18,7 +18,7 @@ This release is for **new installations** and a centrally coordinated installer
 package-upgrade rollout. Existing deployed servers can keep running their
 current installer; before signed package upgrades can be enabled, each existing
 host needs a one-time coordinated package installation and provisioned release
-trust. Downloading this public repository alone does not update a host.
+trust.
 
 ### 1. Create the installation in Nexus
 
@@ -72,14 +72,9 @@ Explicit operator settings and existing local installations retain their configu
 endpoints. Installing the Debian package alone does not activate containers.
 See [release notes](RELEASE_NOTES_v0.3.7.md) for compatibility details.
 
-New installs verify approved manifests against the provisioned release trust.
-Normal heartbeats report the installed application release; checking for updates
-is no longer needed just to populate that field in Nexus.
-
-Signed installer package upgrades are approved through Nexus. Existing hosts
-must complete the coordinated one-time package and trust setup before they can
-poll for an approved upgrade; this release documentation makes no claim that
-any live building host has already been upgraded.
+New installs verify approved SmarterBuildings Core manifests with the production
+public key included in the package. Normal heartbeats report the installed
+application release to Nexus.
 
 
 ### Service addresses
@@ -109,9 +104,8 @@ Each immutable release contains exactly these seven bootstrap assets:
 - `release-manifest.json`
 - `SHA256SUMS`
 
-Nexus may also provide a separate signed `installer-release.json` approval input
-for the coordinated package-upgrade workflow. It is not one of the seven
-bootstrap assets and contains no credentials.
+The GitHub release also includes the signed `installer-release.json` file for
+Nexus package approval.
 
 Manual bundle installation expects Docker Engine and its Compose plugin to be
 installed and running. To install a bundle downloaded separately, verify it with

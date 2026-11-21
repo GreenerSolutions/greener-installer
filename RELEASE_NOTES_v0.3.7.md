@@ -44,10 +44,9 @@ bootstrap bundle assets and contains no credentials. The upgrade path accepts
 only the verified Greener package identified by its version, architecture, size,
 and SHA-256 digest.
 
-This is a centrally coordinated rollout. Pre-existing hosts need a one-time
-coordinated installation of the `0.3.7-1` package and provisioned release trust
-before upgrade polling can be enabled. These notes make no claim that any live
-building host has already been upgraded.
+Existing hosts need a one-time installation of the `0.3.7-1` package and the
+trusted installer-package public policy before they can poll Nexus for upgrades.
+Schedule subsequent upgrades from **Installations → Installer upgrades**.
 
 ## Compatibility and scope
 
@@ -67,16 +66,18 @@ Each immutable bootstrap bundle contains exactly these seven assets:
 - `release-manifest.json`
 - `SHA256SUMS`
 
-## Verification limits
+## Release verification
 
-Clean bundle and checksum verification passed. An isolated Ubuntu worker upgrade
-from `0.3.6-1` to `0.3.7-1` and static systemd verification passed, followed by
-independent review. The broad GitHub CI run was still in progress when these
-notes were prepared; no GitHub CI pass is claimed here. Live building-host
-upgrade, disconnect, and reboot acceptance are not claimed by this release note.
+- GitHub Ubuntu 26.04 validation completed with 1,323 passing source tests,
+  three conditional skips, 61 installed-package tests, and four updater tests.
+- A disposable Ubuntu host verified and installed the signed package from
+  `0.3.6-1` to `0.3.7-1` and reported success. Bundle checksums, package audit,
+  static systemd checks, and independent source review passed.
+- Live building upgrades and Ethernet disconnect and reboot acceptance are
+  deferred.
 
 Debian package SHA-256:
 `13599675aa1b44374a7e18fd682ec9ea11d3a85858eda8026ab2d5e965c63a8f`.
 
 Source: [GreenerSolutions/install PR #25](https://github.com/GreenerSolutions/install/pull/25).
-Candidate build source commit: `0f2e153fc695f5ab57ca213e672d6e022a0436e7`.
+Build source commit: `0f2e153fc695f5ab57ca213e672d6e022a0436e7`.
