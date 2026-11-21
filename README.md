@@ -11,12 +11,14 @@ customer data.
 
 ## Current release
 
-Use `v0.3.6` on a fresh **Ubuntu 26.04 amd64** machine. Recommended resources:
+Use `v0.3.7` on a fresh **Ubuntu 26.04 amd64** machine. Recommended resources:
 4 CPUs, 8 GiB RAM, and 80 GiB free storage.
 
-This release is for **new installations**. Existing deployed servers can keep
-running their current installer; upgrades and migration of older unsigned
-update journals require a separate rollout.
+This release is for **new installations** and a centrally coordinated installer
+package-upgrade rollout. Existing deployed servers can keep running their
+current installer; before signed package upgrades can be enabled, each existing
+host needs a one-time coordinated package installation and provisioned release
+trust.
 
 ### 1. Create the installation in Nexus
 
@@ -32,7 +34,7 @@ The temporary application password is a separate credential used later.
 
 ```bash
 curl --fail --location --proto '=https' --tlsv1.2 \
-  https://github.com/GreenerSolutions/greener-installer/releases/download/v0.3.6/install-release-bundle.sh \
+  https://github.com/GreenerSolutions/greener-installer/releases/download/v0.3.7/install-release-bundle.sh \
   -o install-release-bundle.sh &&
 sudo bash ./install-release-bundle.sh --setup
 ```
@@ -68,11 +70,11 @@ sudo greener setup --guided
 
 Explicit operator settings and existing local installations retain their configured
 endpoints. Installing the Debian package alone does not activate containers.
-See [release notes](RELEASE_NOTES_v0.3.6.md) for compatibility details.
+See [release notes](RELEASE_NOTES_v0.3.7.md) for compatibility details.
 
-New installs verify approved manifests with the production public key included
-in the package. Normal heartbeats report the installed application release;
-checking for updates is no longer needed just to populate that field in Nexus.
+New installs verify approved SmarterBuildings Core manifests with the production
+public key included in the package. Normal heartbeats report the installed
+application release to Nexus.
 
 
 ### Service addresses
@@ -92,15 +94,18 @@ The production services are:
 
 ### Manual bundle installation
 
-Each immutable release contains exactly these seven assets:
+Each immutable release contains exactly these seven bootstrap assets:
 
-- `greener-building-server_0.3.6-1_amd64.deb`
+- `greener-building-server_0.3.7-1_amd64.deb`
 - `tailscale_1.104.2_amd64.deb`
 - `tailscale-package.json`
 - `install-release-bundle.sh`
 - `installer-entrypoint.json`
 - `release-manifest.json`
 - `SHA256SUMS`
+
+The GitHub release also includes the signed `installer-release.json` file for
+Nexus package approval.
 
 Manual bundle installation expects Docker Engine and its Compose plugin to be
 installed and running. To install a bundle downloaded separately, verify it with
@@ -113,8 +118,9 @@ immutable image digests, and enrollment state before activation.
 
 The release bundle is secret-free and contains only the seven audited installer
 assets listed above. A one-time enrollment key authorizes retrieval of the
-installation identity and approved immutable manifest from Nexus. Local network
-settings are confirmed on the machine. Never post credentials, private
+installation identity and approved immutable manifest from Nexus. Signed
+package-upgrade approval is separate metadata and is not a credential. Local
+network settings are confirmed on the machine. Never post credentials, private
 site configuration, or customer data in this repository or in a GitHub issue.
 
 Published assets are versioned and must not be replaced in place. A corrected
